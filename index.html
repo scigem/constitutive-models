@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Constitutive model</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQE06JN33T"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-GQE06JN33T');
+        </script>
+	<script defer src="index-bundle.js"></script></head>
+	<body>
+    <div id="wrap">
+      <div class="column left_col">
+          Constitutive model
+          <select id="model" class="updater">
+              <option value="linear_elasticity" selected>Linear Elasticity</option>
+              <option value="drucker_prager">Drucker Prager</option>
+              <option value="max">Max</option>
+          </select>
+          <div id="E_div">
+            Young's Modulus (GPa): <output id="E_out"> 1</output>
+            <div class="slider">0.5 <input type="range" id="E" value="1" min="0.5" max="10" step="0.01" oninput="E_out.value = E.value" class="updater"> 10</div>
+          </div>
+          <div id="nu_div">
+            Poisson ratio (-): <output id="nu_out"> 0.5</output>
+            <div class="slider">0 <input type="range" id="nu" value="0.25" min="0" max="0.5" step="0.01" oninput="nu_out.value = nu.value" class="updater"> 0.5</div>
+          </div>
+          <div id="beta_div">
+            Beta (-): <output id="beta_out"> 0.5</output>
+            <div class="slider">0 <input type="range" id="beta" value="0.5" min="0" max="1" step="0.01" oninput="beta_out.value = beta.value" class="updater"> 1</div>
+          </div>
+          <div id="mu_div">
+            &mu; (-): <output id="mu_out"> 0.5</output>
+            <div class="slider">0 <input type="range" id="mu" value="0.5" min="0" max="1" step="0.01" oninput="mu_out.value = mu.value" class="updater"> 1</div>
+          </div>
+          <div id="s_div">
+            s (-): <output id="s_out"> 2</output>
+            <div class="slider">1 <input type="range" id="s" value="2" min="1" max="10" step="0.01" oninput="s_out.value = s.value" class="updater"> 10</div>
+          </div>
+        </div>
+    <div id="graph_1" class="column right_col"></div>
+    <div id="graph_2" class="column right_col"></div>
+    <div id="graph_3" class="column right_col"></div>
+  </div>
+	</body>
+</html>
