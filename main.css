@@ -6,6 +6,21 @@ html, body{
     height: 100%;
     margin: 0;
 }
+#scigem_tag {
+  position:absolute;
+  bottom:5pt;
+  left:5pt;
+  font-size: 8pt;
+  z-index: 99;
+  background-color: #3c4040;
+  padding: 5pt;
+  border-radius: 5pt;
+  color: white;
+}
+a {
+  color: white;
+  font-weight: bold;
+}
 
 input[type=text], select {
     width: 100%;
@@ -78,7 +93,7 @@ button:hover, button:active {
 }
 
 span {
-    font-weight: bold;
+    /* font-weight: bold; */
     color: white
 }
 

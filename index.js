@@ -14,9 +14,8 @@ function linear_elasticity(){
 }
 
 function drucker_prager(){
-    // NOTE: THIS IS TOTALLY BROKEN, JUST A SUGGESTION FOR HOW TO IMPLEMENT THINGS
-    let K = E.value*1e6/(3*(1-2*nu.value)); // convert from GPa to kPa
-    let G = E.value*1e6/(2*(1+nu.value)); // convert from GPa to kPa
+    let K = E.value*1e9/(3*(1-2*nu.value)); // convert from GPa to Pa
+    let G = E.value*1e9/(2*(1+nu.value)); // convert from GPa to Pa
     let p = p_vec[p_vec.length - 1];
     let q = q_vec[q_vec.length - 1];
     
@@ -190,9 +189,17 @@ function draw_graphs(){
     Plotly.Plots.resize('graph_4')
 }
 
-update();
-
 var elements = document.getElementsByClassName("updater");
 Array.from(elements).forEach(function(element) {
     element.addEventListener('input', update);
 });
+
+let urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has('model')) {
+    model.value = urlParams.get('model');
+}
+if ( urlParams.has('loading') ) {
+    loading.value = urlParams.get('loading');
+}
+
+update();
