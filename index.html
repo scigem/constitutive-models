@@ -28,6 +28,22 @@
             <option value="triaxial_drained">Triaxial drained compression</option>
             <option value="triaxial_undrained">Triaxial undrained compression</option>
           </select>
+          <div class="variable" id="p_consolidation_div">
+            Consolidation stress (Pa): <output id="p_consolidation_out"> 10000</output>
+            <div class="slider">
+              <span class="ends">0</span>
+              <input type="range" id="p_consolidation" value="10000" min="0" max="20000" step="100" oninput="p_consolidation_out.value = p_consolidation.value" class="updater">
+              <span class="ends">20</span>
+            </div>
+          </div>
+          <div class="variable" id="q_max_div">
+            Max deviatoric stress (Pa): <output id="q_max_out"> 10000</output>
+            <div class="slider">
+              <span class="ends">0</span>
+              <input type="range" id="q_max" value="10000" min="0" max="20000" step="100" oninput="q_max_out.value = q_max.value" class="updater">
+              <span class="ends">20</span>
+            </div>
+          </div>
 
           <h1>Constitutive model</h1>
           <select id="model" class="updater">
