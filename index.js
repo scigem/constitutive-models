@@ -49,18 +49,35 @@ function time_march(m) {
     p_vec = [1e-5];
     q_vec = [1e-5];
 
-    de_v = 1e-3;
-    de_a = 0;
-    for (let i=0; i<10; i++){
-        [dp, dq] = m();
-        store(dp,dq);
+    let current_loading = loading.options[loading.selectedIndex].value;
+    if ( current_loading === 'triaxial_drained' ) {
+        de_v = 1e-3;
+        de_a = 0;
+        for (let i=0; i<10; i++){
+            [dp, dq] = m();
+            store(dp,dq);
+        }
+        de_v = 0;
+        de_a = 1e-3;
+        for (let i=0; i<100; i++){
+            [dp, dq] = m();
+            store(dp,dq);
+        }
+    } else if ( current_loading === 'triaxial_undrained' ) {
+        alert(current_loading + ' loading not implemented yet');
+    } else if ( current_loading === 'isotropic' ) { 
+        de_v = 1e-3;
+        de_a = 0;
+        for (let i=0; i<100; i++){
+            [dp, dq] = m();
+            store(dp,dq);
+        }
+    } else if ( current_loading === 'oedometric' ) {
+        alert(current_loading + ' loading not implemented yet');
     }
-    de_v = 0;
-    de_a = 1e-3;
-    for (let i=0; i<100; i++){
-        [dp, dq] = m();
-        store(dp,dq);
-    }
+
+
+
 
     
 }
@@ -98,15 +115,20 @@ function draw_graphs(){
         y: q_vec,
     };
     let layout = {
+        // width: "10%",
+        // height: "100%",
         xaxis: {
+            automargin: true,
             title: 'Axial strain (%)',
         },
         yaxis: {
+            automargin: true,
             title: 'Deviatoric stress (kPa)',
         }
     }
+    let config = {responsive: true}
 
-    Plotly.react('graph_1', [trace1], layout);
+    Plotly.react('graph_1', [trace1], layout, config);
 
     let trace2 = {...trace1};
     trace2.x = p_vec;
@@ -114,7 +136,7 @@ function draw_graphs(){
     layout.xaxis.title = 'Pressure (kPa)';
     layout.yaxis.title = 'Deviatoric stress (kPa)';
 
-    Plotly.react('graph_2', [trace2], layout);
+    Plotly.react('graph_2', [trace2], layout, config);
 
     let trace3 = {...trace1 };
     trace3.x = e_a_vec;
@@ -122,7 +144,20 @@ function draw_graphs(){
     layout.xaxis.title = 'Axial strain (%)';
     layout.yaxis.title = 'Volumetric strain (%)';
 
-    Plotly.react('graph_3', [trace3], layout);
+    Plotly.react('graph_3', [trace3], layout, config);
+
+    let trace4 = {...trace1 };
+    trace3.x = e_a_vec;
+    trace3.y = e_v_vec;
+    layout.xaxis.title = 'Axial strain (%)';
+    layout.yaxis.title = 'Volumetric strain (%)';
+
+    Plotly.react('graph_4', [trace4], layout, config);
+
+    Plotly.Plots.resize('graph_1')
+    Plotly.Plots.resize('graph_2')
+    Plotly.Plots.resize('graph_3')
+    Plotly.Plots.resize('graph_4')
 }
 
 update();

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build" : "webpack build"
+    "build": "webpack build"
   },
   "keywords": [
     "Constitutive models",
@@ -15,6 +15,7 @@
   "author": "Benjy Marks",
   "license": "ISC",
   "dependencies": {
+    "mathjs": "^11.8.0",
     "plotly.js-dist": "^2.23.2"
   },
   "devDependencies": {

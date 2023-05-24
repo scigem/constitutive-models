@@ -21,36 +21,65 @@
 	<body>
     <div id="wrap">
       <div class="column left_col">
-          Constitutive model
+          <h1>Loading condition</h1>
+          <select id="loading" class="updater">
+            <option value="isotropic" selected>Isotropic compression</option>
+            <option value="oedometric">Oedometric compression</option>
+            <option value="triaxial_drained">Triaxial drained compression</option>
+            <option value="triaxial_undrained">Triaxial undrained compression</option>
+          </select>
+
+          <h1>Constitutive model</h1>
           <select id="model" class="updater">
               <option value="linear_elasticity" selected>Linear Elasticity</option>
               <option value="drucker_prager">Drucker Prager</option>
-              <option value="max">Max</option>
+              <!-- <option value="max">Max</option> -->
           </select>
-          <div id="E_div">
+          <div class="variable" id="E_div">
             Young's Modulus (GPa): <output id="E_out"> 1</output>
-            <div class="slider">0.5 <input type="range" id="E" value="1" min="0.5" max="10" step="0.01" oninput="E_out.value = E.value" class="updater"> 10</div>
+            <div class="slider">
+              <span class="ends">0.5</span>
+              <input type="range" id="E" value="1" min="0.5" max="10" step="0.01" oninput="E_out.value = E.value" class="updater">
+              <span class="ends">10</span>
+            </div>
           </div>
-          <div id="nu_div">
+          <div class="variable" id="nu_div">
             Poisson ratio (-): <output id="nu_out"> 0.5</output>
-            <div class="slider">0 <input type="range" id="nu" value="0.25" min="0" max="0.5" step="0.01" oninput="nu_out.value = nu.value" class="updater"> 0.5</div>
+            <div class="slider">
+              <span class="ends">0</span>
+              <input type="range" id="nu" value="0.25" min="0" max="0.5" step="0.01" oninput="nu_out.value = nu.value" class="updater">
+              <span class="ends">0.5</span>
+            </div>
           </div>
-          <div id="beta_div">
+          <div class="variable" id="beta_div">
             Beta (-): <output id="beta_out"> 0.5</output>
-            <div class="slider">0 <input type="range" id="beta" value="0.5" min="0" max="1" step="0.01" oninput="beta_out.value = beta.value" class="updater"> 1</div>
+            <div class="slider">
+              <span class="ends">0</span>
+              <input type="range" id="beta" value="0.5" min="0" max="1" step="0.01" oninput="beta_out.value = beta.value" class="updater">
+              <span class="ends">1</span>
+            </div>
           </div>
-          <div id="mu_div">
+          <div class="variable" id="mu_div">
             &mu; (-): <output id="mu_out"> 0.5</output>
-            <div class="slider">0 <input type="range" id="mu" value="0.5" min="0" max="1" step="0.01" oninput="mu_out.value = mu.value" class="updater"> 1</div>
+            <div class="slider">
+              <span class="ends">0</span>
+              <input type="range" id="mu" value="0.5" min="0" max="1" step="0.01" oninput="mu_out.value = mu.value" class="updater">
+              <span class="ends">1</span>
+            </div>
           </div>
-          <div id="s_div">
+          <div class="variable" id="s_div">
             s (-): <output id="s_out"> 2</output>
-            <div class="slider">1 <input type="range" id="s" value="2" min="1" max="10" step="0.01" oninput="s_out.value = s.value" class="updater"> 10</div>
+            <div class="slider">
+              <span class="ends">1</span>
+              <input type="range" id="s" value="2" min="1" max="10" step="0.01" oninput="s_out.value = s.value" class="updater">
+              <span class="ends">10</span>
+            </div>
           </div>
         </div>
     <div id="graph_1" class="column right_col"></div>
     <div id="graph_2" class="column right_col"></div>
     <div id="graph_3" class="column right_col"></div>
+    <div id="graph_4" class="column right_col"></div>
   </div>
 	</body>
 </html>
