@@ -1,9 +1,10 @@
 import Plotly from 'plotly.js-dist';
 import css from './main.css';
 
+let de_v, de_a;
 let e_v_vec, e_a_vec, p_vec, q_vec;
 
-function linear_elasticity(de_v,de_a){
+function linear_elasticity(){
     let K = parseFloat(E.value)*1e6/(3*(1-2*parseFloat(nu.value))); // convert from GPa to kPa
     let G = parseFloat(E.value)*1e6/(2*(1+parseFloat(nu.value))); // convert from GPa to kPa
     let dp = K*de_v;
@@ -12,30 +13,29 @@ function linear_elasticity(de_v,de_a){
     return [dp, dq]
 }
 
-function drucker_prager(de_v,de_a){
+function drucker_prager(){
     // NOTE: THIS IS TOTALLY BROKEN, JUST A SUGGESTION FOR HOW TO IMPLEMENT THINGS
     let K = E.value*1e6/(3*(1-2*nu.value)); // convert from GPa to kPa
     let G = E.value*1e6/(2*(1+nu.value)); // convert from GPa to kPa
     let p = p_vec[p_vec.length - 1];
     let q = q_vec[q_vec.length - 1];
-    let e_v = e_v_vec[e_v_vec.length - 1];
-    let e_a = e_a_vec[e_a_vec.length - 1];
-    let lambda = (3*G*p*q*e_v - K*q*q*e_v)/(3*G*mu.value*p*p + K*beta.value*q*q);
+    
+    let lambda = (Math.sqrt(6)*G*p*q*de_a - K*q*q*de_v)/(3*G*mu.value*p*p + K*beta.value*q*q);
     if ( isNaN(lambda) ) { lambda = 0 }
     if ( lambda < 0 ) { lambda = 0 }
     let dp = K*(de_v + beta.value*lambda*(q/mu.value/p)**s.value);
-    let dq = 2*G*(e_a - 3/2*lambda*(q/mu.value/p)**(s.value-1));
+    let dq = 2*G*(de_a - Math.sqrt(6)/2*lambda*(q/mu.value/p)**(s.value-1));
     return [dp, dq]
     
 }
 
-function max(de_v,de_a){
+function max(){
     let dp = 0;
     let dq = 0;
     return [dp, dq]
 }
 
-function store(dp,dq,de_v,de_a){
+function store(dp,dq){
     e_v_vec.push(e_v_vec[e_v_vec.length - 1] + de_v);
     e_a_vec.push(e_a_vec[e_a_vec.length - 1] + de_a);
     p_vec.push(p_vec[p_vec.length - 1] + dp);
@@ -49,17 +49,17 @@ function time_march(m) {
     p_vec = [1e-5];
     q_vec = [1e-5];
 
-    let de_v = 1e-3;
-    let de_a = 0;
+    de_v = 1e-3;
+    de_a = 0;
     for (let i=0; i<10; i++){
-        [dp, dq] = m(de_v,de_a);
-        store(dp,dq,de_v,de_a);
+        [dp, dq] = m();
+        store(dp,dq);
     }
     de_v = 0;
     de_a = 1e-3;
-    for (let i=0; i<10; i++){
-        [dp, dq] = m(de_v,de_a);
-        store(dp,dq,de_v,de_a);
+    for (let i=0; i<100; i++){
+        [dp, dq] = m();
+        store(dp,dq);
     }
 
     
