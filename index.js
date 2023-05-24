@@ -5,8 +5,8 @@ let de_v, de_a;
 let e_v_vec, e_a_vec, p_vec, q_vec;
 
 function linear_elasticity(){
-    let K = parseFloat(E.value)*1e6/(3*(1-2*parseFloat(nu.value))); // convert from GPa to kPa
-    let G = parseFloat(E.value)*1e6/(2*(1+parseFloat(nu.value))); // convert from GPa to kPa
+    let K = parseFloat(E.value)*1e9/(3*(1-2*parseFloat(nu.value))); // convert from GPa to Pa
+    let G = parseFloat(E.value)*1e9/(2*(1+parseFloat(nu.value))); // convert from GPa to Pa
     let dp = K*de_v;
     let dq = 2*G*de_a;
     // console.log(dp, dq);
@@ -46,30 +46,39 @@ function time_march(m) {
     let dp, dq;
     e_v_vec = [0];
     e_a_vec = [0]
-    p_vec = [1e-5];
-    q_vec = [1e-5];
+    p_vec = [1e-10];
+    q_vec = [1e-10];
 
     let current_loading = loading.options[loading.selectedIndex].value;
     if ( current_loading === 'triaxial_drained' ) {
-        de_v = 1e-3;
+        de_v = 2e-6;
         de_a = 0;
-        for (let i=0; i<10; i++){
+        let p = 0;
+        while ( p < parseFloat(p_consolidation.value)) {
             [dp, dq] = m();
+            p += dp
+            // console.log(p,dp)
             store(dp,dq);
         }
         de_v = 0;
-        de_a = 1e-3;
-        for (let i=0; i<100; i++){
+        de_a = 2e-6;
+        let q = 0;
+        while ( q < parseFloat(q_max.value)) {
             [dp, dq] = m();
+            q += dq
+            // console.log(p,dp)
             store(dp,dq);
         }
     } else if ( current_loading === 'triaxial_undrained' ) {
         alert(current_loading + ' loading not implemented yet');
     } else if ( current_loading === 'isotropic' ) { 
-        de_v = 1e-3;
+        de_v = 1e-7;
         de_a = 0;
-        for (let i=0; i<100; i++){
+        let p = 0;
+        while ( p < parseFloat(p_consolidation.value)) {
             [dp, dq] = m();
+            p += dp
+            // console.log(p,dp)
             store(dp,dq);
         }
     } else if ( current_loading === 'oedometric' ) {
@@ -83,6 +92,21 @@ function time_march(m) {
 }
 
 function update() {
+    let current_loading = loading.options[loading.selectedIndex].value;
+    if ( current_loading === 'triaxial_drained' ) {
+        document.getElementById('p_consolidation_div').hidden=false ;
+        document.getElementById('q_max_div').hidden=false ;
+    } else if ( current_loading === 'triaxial_undrained' ) {
+        document.getElementById('p_consolidation_div').hidden=false ;
+        document.getElementById('q_max_div').hidden=false ;
+    } else if ( current_loading === 'isotropic' ) {
+        document.getElementById('p_consolidation_div').hidden=false ;
+        document.getElementById('q_max_div').hidden=true ;
+    } else if ( current_loading === 'oedometric' ) {
+        document.getElementById('p_consolidation_div').hidden=false ;
+        document.getElementById('q_max_div').hidden=true ;
+    }
+
     let current_model = model.options[model.selectedIndex].value;
     if ( current_model === 'linear_elasticity' ) {
         document.getElementById('E_div').hidden=false ;
@@ -113,44 +137,46 @@ function draw_graphs(){
     let trace1 = {
         x: e_v_vec,
         y: q_vec,
+        type: 'line',
+        mode: 'lines',
     };
     let layout = {
         // width: "10%",
         // height: "100%",
         xaxis: {
             automargin: true,
-            title: 'Axial strain (%)',
+            title: 'Axial strain (-)',
         },
         yaxis: {
             automargin: true,
-            title: 'Deviatoric stress (kPa)',
+            title: 'Deviatoric stress (Pa)',
         }
     }
     let config = {responsive: true}
 
     Plotly.react('graph_1', [trace1], layout, config);
 
-    let trace2 = {...trace1};
-    trace2.x = p_vec;
-    trace2.y = q_vec;
-    layout.xaxis.title = 'Pressure (kPa)';
-    layout.yaxis.title = 'Deviatoric stress (kPa)';
+    let trace2 = {...trace1 };
+    trace2.x = e_a_vec;
+    trace2.y = e_v_vec;
+    layout.xaxis.title = 'Axial strain (-)';
+    layout.yaxis.title = 'Volumetric strain (-)';
 
     Plotly.react('graph_2', [trace2], layout, config);
 
-    let trace3 = {...trace1 };
-    trace3.x = e_a_vec;
-    trace3.y = e_v_vec;
-    layout.xaxis.title = 'Axial strain (%)';
-    layout.yaxis.title = 'Volumetric strain (%)';
+    let trace3 = {...trace1};
+    trace3.x = p_vec;
+    trace3.y = q_vec;
+    layout.xaxis.title = 'Pressure (Pa)';
+    layout.yaxis.title = 'Deviatoric stress (Pa)';
 
     Plotly.react('graph_3', [trace3], layout, config);
 
     let trace4 = {...trace1 };
-    trace3.x = e_a_vec;
+    trace3.x = p_vec;
     trace3.y = e_v_vec;
-    layout.xaxis.title = 'Axial strain (%)';
-    layout.yaxis.title = 'Volumetric strain (%)';
+    layout.xaxis.title = 'Pressure (Pa)';
+    layout.yaxis.title = 'Volumetric strain (-)';
 
     Plotly.react('graph_4', [trace4], layout, config);
 
