@@ -139,6 +139,10 @@ function draw_graphs(){
         y: q_vec,
         type: 'line',
         mode: 'lines',
+        line: {
+            color: 'E44F35',
+            width: 5,
+        }
     };
     let layout = {
         // width: "10%",

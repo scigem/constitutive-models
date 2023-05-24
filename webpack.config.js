@@ -11,7 +11,7 @@ module.exports = [
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: 'Constitutive model',
+        title: 'Constitutive models',
         // favicon: "./resources/favicon512.png",
         template: "index.html",
         filename: "index.html",
