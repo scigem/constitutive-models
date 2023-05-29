@@ -151,10 +151,10 @@ function draw_graphs(){
         type: 'line',
         mode: 'lines',
         line: {
-            color: 'E44F35',
+            color: 'black',
             width: 5,
         },
-        name: model.options[model.selectedIndex].value
+        name: 'Model'//model.options[model.selectedIndex].value
     };
     let layout1 = {
         // width: "10%",
@@ -177,23 +177,22 @@ function draw_graphs(){
         exp_traces4 = [];
         for ( let t in exp_data ) {
             let test = exp_data[t]
-            if ( (current_loading === 'oedometric') && (t.includes('OE')) ) {
+            if ( (current_loading === 'triaxial_drained') && (t.includes('TMD')) ) {
                 // console.log(t)
-                let name = t;
                 if ( parseFloat(test.ID0.min) < initial_density.value && parseFloat(test.ID0.max) > initial_density.value) {
-                    exp_traces1.push({x: test.eps1.data, y: test.q.data,    type: 'scatter', mode: 'markers', marker: {color: 'black', size: 5}, name: name});
-                    exp_traces2.push({x: test.eps1.data, y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {color: 'black', size: 5}, name: name});
-                    exp_traces3.push({x: test.p.data,    y: test.q.data,    type: 'scatter', mode: 'markers', marker: {color: 'black', size: 5}, name: name});
-                    exp_traces4.push({x: test.p.data,    y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {color: 'black', size: 5}, name: name});
+                    exp_traces1.push({x: test.eps1.data, y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
+                    exp_traces2.push({x: test.eps1.data, y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
+                    exp_traces3.push({x: test.p.data,    y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
+                    exp_traces4.push({x: test.p.data,    y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
                 }
             }
             else if ( (current_loading === 'triaxial_drained') && (t.includes('TMD')) ) {
-                let name = '<a href='+test.publication_doi_link+'>'+String(t)+'</a>';
+                // console.log(t)
                 if ( parseFloat(test.ID0.min) < initial_density.value && parseFloat(test.ID0.max) > initial_density.value) {
-                    exp_traces1.push({x: test.eps1.data, y: test.q.data,    type: 'scatter', mode: 'markers', marker: {color: 'black', size: 5}, name: name});
-                    exp_traces2.push({x: test.eps1.data, y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {color: 'black', size: 5}, name: name});
-                    exp_traces3.push({x: test.p.data,    y: test.q.data,    type: 'scatter', mode: 'markers', marker: {color: 'black', size: 5}, name: name});
-                    exp_traces4.push({x: test.p.data,    y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {color: 'black', size: 5}, name: name});
+                    exp_traces1.push({x: test.eps1.data, y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
+                    exp_traces2.push({x: test.eps1.data, y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
+                    exp_traces3.push({x: test.p.data,    y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
+                    exp_traces4.push({x: test.p.data,    y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
                 }
             }
         }
