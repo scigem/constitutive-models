@@ -7,15 +7,16 @@ html, body{
     margin: 0;
 }
 #scigem_tag {
-  position:absolute;
+  position:fixed;
   bottom:5pt;
   left:5pt;
   font-size: 8pt;
   z-index: 99;
-  background-color: #3c4040;
+  background-color: #363636;
   padding: 5pt;
   border-radius: 5pt;
   color: white;
+  /* opacity: 0.5; */
 }
 a {
   color: white;

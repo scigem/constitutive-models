@@ -20,81 +20,93 @@
 	</head>
 	<body>
     <span id="scigem_tag">
-      Built with <a href="https://plotly.com/javascript/">plotly.js</a> by <a href="http://benjymarks.com/">Benjy Marks</a>
+      Built with <a href="https://plotly.com/javascript/">plotly.js</a> by <a href="http://benjymarks.com/">Benjy Marks</a>. <a href="https://doi.org/10.1007/s11440-015-0402-z">Exp data</a>.
     </span>
     <div id="wrap">
       <div class="column left_col">
-          <h1>Loading condition</h1>
-          <select id="loading" class="updater">
-            <option value="isotropic" selected>Isotropic compression</option>
-            <option value="oedometric">Oedometric compression</option>
-            <option value="triaxial_drained">Triaxial drained compression</option>
-            <option value="triaxial_undrained">Triaxial undrained compression</option>
-          </select>
-          <div class="variable" id="p_consolidation_div">
-            Consolidation stress (Pa): <output id="p_consolidation_out"> 10000</output>
-            <div class="slider">
-              <span class="ends">0</span>
-              <input type="range" id="p_consolidation" value="10000" min="0" max="20000" step="100" oninput="p_consolidation_out.value = p_consolidation.value" class="updater">
-              <span class="ends">20</span>
-            </div>
+        <h1>Loading condition</h1>
+        <select id="loading" class="updater">
+          <option value="isotropic" selected>Isotropic compression</option>
+          <option value="oedometric">Oedometric compression</option>
+          <option value="triaxial_drained">Triaxial drained compression</option>
+          <option value="triaxial_undrained">Triaxial undrained compression</option>
+        </select>
+        <div class="variable" id="p_consolidation_div">
+          Consolidation stress (Pa): <output id="p_consolidation_out"> 50000</output>
+          <div class="slider">
+            <span class="ends">0</span>
+            <input type="range" id="p_consolidation" value="50000" min="0" max="100000" step="100" oninput="p_consolidation_out.value = p_consolidation.value" class="updater">
+            <span class="ends">20</span>
           </div>
-          <div class="variable" id="q_max_div">
-            Max deviatoric stress (Pa): <output id="q_max_out"> 10000</output>
-            <div class="slider">
-              <span class="ends">0</span>
-              <input type="range" id="q_max" value="10000" min="0" max="20000" step="100" oninput="q_max_out.value = q_max.value" class="updater">
-              <span class="ends">20</span>
-            </div>
+        </div>
+        <div class="variable" id="q_max_div">
+          Max deviatoric stress (Pa): <output id="q_max_out"> 100000</output>
+          <div class="slider">
+            <span class="ends">0</span>
+            <input type="range" id="q_max" value="50000" min="0" max="100000" step="100" oninput="q_max_out.value = q_max.value" class="updater">
+            <span class="ends">20</span>
           </div>
+        </div>
 
-          <h1>Constitutive model</h1>
-          <select id="model" class="updater">
-              <option value="linear_elasticity" selected>Linear Elasticity</option>
-              <option value="drucker_prager">Drucker Prager</option>
-              <!-- <option value="max">Max</option> -->
-          </select>
-          <div class="variable" id="E_div">
-            Young's Modulus (GPa): <output id="E_out"> 1</output>
-            <div class="slider">
-              <span class="ends">0.5</span>
-              <input type="range" id="E" value="1" min="0.5" max="10" step="0.01" oninput="E_out.value = E.value" class="updater">
-              <span class="ends">10</span>
-            </div>
+        <h1>Constitutive model</h1>
+        <select id="model" class="updater">
+            <option value="linear_elasticity" selected>Linear Elasticity</option>
+            <option value="drucker_prager">Drucker Prager</option>
+            <!-- <option value="max">Max</option> -->
+        </select>
+        <div class="variable" id="E_div">
+          Young's Modulus (GPa): <output id="E_out"> 1</output>
+          <div class="slider">
+            <span class="ends">0.5</span>
+            <input type="range" id="E" value="1" min="0.5" max="10" step="0.01" oninput="E_out.value = E.value" class="updater">
+            <span class="ends">10</span>
           </div>
-          <div class="variable" id="nu_div">
-            Poisson ratio (-): <output id="nu_out"> 0.5</output>
+        </div>
+        <div class="variable" id="nu_div">
+          Poisson ratio (-): <output id="nu_out"> 0.5</output>
+          <div class="slider">
+            <span class="ends">0</span>
+            <input type="range" id="nu" value="0.25" min="0" max="0.5" step="0.01" oninput="nu_out.value = nu.value" class="updater">
+            <span class="ends">0.5</span>
+          </div>
+        </div>
+        <div class="variable" id="beta_div">
+          Beta (-): <output id="beta_out"> 0.5</output>
+          <div class="slider">
+            <span class="ends">0</span>
+            <input type="range" id="beta" value="0.5" min="0" max="1" step="0.01" oninput="beta_out.value = beta.value" class="updater">
+            <span class="ends">1</span>
+          </div>
+        </div>
+        <div class="variable" id="mu_div">
+          &mu; (-): <output id="mu_out"> 0.5</output>
+          <div class="slider">
+            <span class="ends">0</span>
+            <input type="range" id="mu" value="0.5" min="0" max="1" step="0.01" oninput="mu_out.value = mu.value" class="updater">
+            <span class="ends">1</span>
+          </div>
+        </div>
+        <div class="variable" id="s_div">
+          s (-): <output id="s_out"> 2</output>
+          <div class="slider">
+            <span class="ends">1</span>
+            <input type="range" id="s" value="2" min="1" max="10" step="0.01" oninput="s_out.value = s.value" class="updater">
+            <span class="ends">10</span>
+          </div>
+        </div>
+      
+        <div id="Initial condition">
+          <h1>Initial condition</h1>
+          <div class="variable" id="initial_density_div">
+            Initial relative density (-): <output id="initial_density_out"> 0.5</output>
             <div class="slider">
               <span class="ends">0</span>
-              <input type="range" id="nu" value="0.25" min="0" max="0.5" step="0.01" oninput="nu_out.value = nu.value" class="updater">
-              <span class="ends">0.5</span>
-            </div>
-          </div>
-          <div class="variable" id="beta_div">
-            Beta (-): <output id="beta_out"> 0.5</output>
-            <div class="slider">
-              <span class="ends">0</span>
-              <input type="range" id="beta" value="0.5" min="0" max="1" step="0.01" oninput="beta_out.value = beta.value" class="updater">
+              <input type="range" id="initial_density" value="0.5" min="0" max="1" step="0.01" oninput="initial_density_out.value = initial_density.value" class="updater">
               <span class="ends">1</span>
-            </div>
-          </div>
-          <div class="variable" id="mu_div">
-            &mu; (-): <output id="mu_out"> 0.5</output>
-            <div class="slider">
-              <span class="ends">0</span>
-              <input type="range" id="mu" value="0.5" min="0" max="1" step="0.01" oninput="mu_out.value = mu.value" class="updater">
-              <span class="ends">1</span>
-            </div>
-          </div>
-          <div class="variable" id="s_div">
-            s (-): <output id="s_out"> 2</output>
-            <div class="slider">
-              <span class="ends">1</span>
-              <input type="range" id="s" value="2" min="1" max="10" step="0.01" oninput="s_out.value = s.value" class="updater">
-              <span class="ends">10</span>
             </div>
           </div>
         </div>
+      </div>
     <div id="graph_1" class="column right_col"></div>
     <div id="graph_2" class="column right_col"></div>
     <div id="graph_3" class="column right_col"></div>
