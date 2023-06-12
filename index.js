@@ -10,6 +10,7 @@ let exp_traces1 = [];
 let exp_traces2 = [];
 let exp_traces3 = [];
 let exp_traces4 = [];
+let ID0_thresh = 0.02;
 
 function linear_elasticity(){
     let K = parseFloat(E.value)*1e9/(3*(1-2*parseFloat(nu.value))); // convert from GPa to Pa
@@ -177,22 +178,24 @@ function draw_graphs(){
         exp_traces4 = [];
         for ( let t in exp_data ) {
             let test = exp_data[t]
+            // let name = t;
+            let name = "ID<sub>0</sub> = " + test.ID0;
             if ( (current_loading === 'triaxial_drained') && (t.includes('TMD')) ) {
                 // console.log(t)
-                if ( parseFloat(test.ID0.min) < initial_density.value && parseFloat(test.ID0.max) > initial_density.value) {
-                    exp_traces1.push({x: test.eps1.data, y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
-                    exp_traces2.push({x: test.eps1.data, y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
-                    exp_traces3.push({x: test.p.data,    y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
-                    exp_traces4.push({x: test.p.data,    y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
+                if (Math.abs(parseFloat(test.ID0) - initial_density.value) < ID0_thresh ) {
+                    exp_traces1.push({x: test.eps1.data, y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: name});
+                    exp_traces2.push({x: test.eps1.data, y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: name});
+                    exp_traces3.push({x: test.p.data,    y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: name});
+                    exp_traces4.push({x: test.p.data,    y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: name});
                 }
             }
             else if ( (current_loading === 'triaxial_drained') && (t.includes('TMD')) ) {
                 // console.log(t)
-                if ( parseFloat(test.ID0.min) < initial_density.value && parseFloat(test.ID0.max) > initial_density.value) {
-                    exp_traces1.push({x: test.eps1.data, y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
-                    exp_traces2.push({x: test.eps1.data, y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
-                    exp_traces3.push({x: test.p.data,    y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
-                    exp_traces4.push({x: test.p.data,    y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: t});
+                if (Math.abs(parseFloat(test.ID0) - initial_density.value) < ID0_thresh ) {
+                    exp_traces1.push({x: test.eps1.data, y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: name});
+                    exp_traces2.push({x: test.eps1.data, y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: name});
+                    exp_traces3.push({x: test.p.data,    y: test.q.data,    type: 'scatter', mode: 'markers', marker: {size: 5}, name: name});
+                    exp_traces4.push({x: test.p.data,    y: test.epsv.data, type: 'scatter', mode: 'markers', marker: {size: 5}, name: name});
                 }
             }
         }
